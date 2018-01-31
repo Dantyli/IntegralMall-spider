@@ -16,7 +16,6 @@ def getNine():
         for st in range(len(reqf)):
             if reqf[st]['storename'] not in store_arr:
                 store_arr.append(reqf[st]['storename'])
-            
     print(store_arr)
 getNine()
         
