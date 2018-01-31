@@ -1,4 +1,5 @@
 #encoding=utf-8
+import json
 from bs4 import BeautifulSoup as bs
 from urllib.request import Request,urlopen
 class Athm():
@@ -14,7 +15,7 @@ class Athm():
         content=content.decode(charset)
         return content
     def getPrice(self):
-        for id in range(10000,10010):
+        for id in range(10000,10010):#商品id 10000-10010 的商品
             link=self.url.format(id)
             body=self.readHtml(link)
             soup=bs(body,'html.parser')
@@ -23,9 +24,12 @@ class Athm():
             total_price=float(price)+float(inte)
             name=soup.find_all('span',class_='search_key')[1].string
             self.dict[name]=total_price #储存数据
-        p=self.dict
-        sorted(p.items(),reverse=True)
-        print(p)
+        dic=self.dict
+        js=json.dumps(dic,ensure_ascii=False)
+        filename='download.json'
+        with open(filename,'w',encoding='utf-8') as f:
+            f.write(js)
+            print('下载完成')
 if __name__=='__main__':
     a=Athm()
     a.getPrice()
